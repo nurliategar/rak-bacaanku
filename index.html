@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rak Bacaanku — Beranda</title>
+<meta name="description" content="Perpustakaan buku digital pribadi: koleksi, progres, dan catatan bacaan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper-50:#FBF8F2; --paper-100:#F4EFE6; --paper-200:#EAE2D3; --paper-300:#E8DFCF; --paper-400:#E2D9C8; --paper-500:#D6CCB8;
+    --ink-900:#1F1B16; --ink-700:#3A332B; --ink-650:#4A4238; --ink-600:#5A5046; --ink-500:#6B6358; --ink-300:#C9BFA9; --ink-200:#D9D0BE;
+    --green-700:#1E3F36; --green-600:#2F5D50; --green-100:#DCE8E2;
+    --amber-900:#6B3F10; --amber-500:#E0A458; --amber-100:#F6E1C4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Instrument Sans',system-ui,sans-serif;background:var(--paper-100);color:var(--ink-900)}
+  a{color:var(--green-600)}
+  a:hover{color:var(--green-700)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  button{font-family:inherit;cursor:pointer}
+  input{font-family:inherit}
+  .display{font-family:Fraunces,Georgia,serif}
+  .page{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;background:var(--paper-100)}
+
+  header{height:88px;box-sizing:border-box;padding:0 80px;display:flex;align-items:center;gap:48px;border-bottom:1px solid var(--paper-400)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink-900)}
+  .brand span{font-family:Fraunces,Georgia,serif;font-size:24px;font-weight:600;letter-spacing:-0.01em}
+  nav{display:flex;gap:8px}
+  nav a{padding:10px 16px;border-radius:999px;color:var(--ink-900);text-decoration:none;font-size:15px;font-weight:500}
+  nav a.active{background:var(--ink-900);color:var(--paper-100)}
+  .toolbar{flex-grow:1;display:flex;justify-content:flex-end;align-items:center;gap:16px}
+  .search{position:relative;width:320px}
+  .search svg{position:absolute;left:16px;top:13px}
+  .search input{width:100%;height:44px;box-sizing:border-box;padding:0 16px 0 44px;border-radius:999px;border:1px solid var(--paper-500);background:var(--paper-50);font-size:15px;color:var(--ink-900)}
+  .btn-add{height:44px;padding:0 20px;border-radius:999px;border:none;background:var(--green-600);color:#fff;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .avatar{width:44px;height:44px;border-radius:999px;border:1px solid var(--paper-500);background:var(--paper-300);color:var(--ink-900);font-family:Fraunces,Georgia,serif;font-size:17px;font-weight:600}
+
+  main{padding:56px 80px 0;display:flex;flex-direction:column;gap:80px}
+
+  .hero{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:32px}
+  .hero-card{background:var(--ink-900);color:var(--paper-100);border-radius:28px;padding:48px;display:flex;gap:48px;align-items:center}
+  .cover-xl{width:220px;height:320px;flex-shrink:0;border-radius:6px 14px 14px 6px;background:#8A3B2E;color:#F6E7D2;box-sizing:border-box;padding:28px 22px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 24px 48px rgba(0,0,0,.35),inset 6px 0 0 rgba(0,0,0,.18)}
+  .cover-xl .t{font-family:Fraunces,Georgia,serif;font-size:34px;font-weight:600;line-height:1.05}
+  .cover-xl .a{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+  .hero-body{flex-grow:1;display:flex;flex-direction:column;gap:20px}
+  .eyebrow{margin:0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-300)}
+  .hero-body h1{margin:0;font-family:Fraunces,Georgia,serif;font-size:52px;font-weight:600;line-height:1.02;letter-spacing:-.02em}
+  .hero-body p.desc{margin:0;font-size:17px;line-height:1.55;color:var(--ink-200);max-width:460px}
+  .progress-row{display:flex;flex-direction:column;gap:10px;max-width:460px}
+  .progress-meta{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-300)}
+  .progress-meta strong{color:var(--paper-100);font-weight:600}
+  .track{height:8px;border-radius:999px;background:var(--ink-700);overflow:hidden}
+  .track .fill{height:100%;background:var(--amber-500);border-radius:999px}
+  .hero-actions{display:flex;gap:12px;margin-top:8px}
+  .btn-primary{height:52px;padding:0 28px;border-radius:999px;border:none;background:var(--amber-500);color:var(--ink-900);font-size:16px;font-weight:600}
+  .btn-ghost{height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--ink-600);background:transparent;color:var(--paper-100);font-size:16px;font-weight:500}
+
+  .goal-card{background:var(--paper-50);border:1px solid var(--paper-400);border-radius:28px;padding:40px;display:flex;flex-direction:column;gap:28px}
+  .goal-label{margin:0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-500)}
+  .goal-num{margin:0;font-family:Fraunces,Georgia,serif;font-size:64px;font-weight:600;line-height:1;letter-spacing:-.02em}
+  .goal-num span{font-size:28px;color:var(--ink-500);font-weight:400}
+  .months{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}
+  .month{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .month .bar-wrap{width:100%;height:88px;display:flex;align-items:flex-end}
+  .month .bar{width:100%;border-radius:4px}
+  .month span{font-size:11px;color:var(--ink-500)}
+  .goal-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;border-top:1px solid var(--paper-400);padding-top:24px}
+  .stat b{display:block;font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:600}
+  .stat span{font-size:14px;color:var(--ink-500)}
+
+  section{display:flex;flex-direction:column;gap:28px}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between}
+  .section-head h2{margin:0;font-family:Fraunces,Georgia,serif;font-size:36px;font-weight:600;letter-spacing:-.01em}
+  .section-head a{font-size:15px;font-weight:600;text-decoration:none}
+
+  .reading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .reading-card{background:var(--paper-50);border:1px solid var(--paper-400);border-radius:20px;padding:24px;display:flex;gap:24px;align-items:center}
+  .cover-sm{width:96px;height:140px;flex-shrink:0;border-radius:3px 8px 8px 3px;box-sizing:border-box;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 20px rgba(31,27,22,.18),inset 4px 0 0 rgba(0,0,0,.15)}
+  .cover-sm .t{font-family:Fraunces,Georgia,serif;font-size:15px;font-weight:600;line-height:1.1}
+  .cover-sm .a{font-size:9px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .reading-info{flex-grow:1;display:flex;flex-direction:column;gap:10px}
+  .reading-info h3{margin:0;font-family:Fraunces,Georgia,serif;font-size:22px;font-weight:600;line-height:1.15}
+  .reading-info p{margin:0;font-size:15px;color:var(--ink-500)}
+  .reading-meta{display:flex;justify-content:space-between;font-size:14px;margin-top:6px}
+  .reading-meta .left{color:var(--ink-500)}
+  .reading-meta .pct{font-weight:600}
+  .track-sm{height:6px;border-radius:999px;background:var(--paper-300);overflow:hidden}
+  .track-sm .fill{height:100%;background:var(--green-600);border-radius:999px}
+
+  .rak-head .tabs{display:flex;gap:8px;padding:6px;background:var(--paper-200);border-radius:999px}
+  .tab{height:44px;padding:0 20px;border-radius:999px;border:none;background:transparent;color:var(--ink-900);font-size:15px;font-weight:600}
+  .tab[aria-selected="true"]{background:var(--ink-900);color:var(--paper-100)}
+  .tab .count{opacity:.6;font-weight:500}
+  .shelf-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:40px 32px}
+  .shelf-item{display:flex;flex-direction:column;gap:14px}
+  .cover-md{height:330px;border-radius:4px 12px 12px 4px;box-sizing:border-box;padding:28px 22px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 32px rgba(31,27,22,.16),inset 6px 0 0 rgba(0,0,0,.15)}
+  .cover-md .t{font-family:Fraunces,Georgia,serif;font-size:28px;font-weight:600;line-height:1.08}
+  .cover-md .a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+  .shelf-info{display:flex;flex-direction:column;gap:6px}
+  .chip{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:999px}
+  .shelf-info h3{margin:0;font-family:Fraunces,Georgia,serif;font-size:20px;font-weight:600;line-height:1.2}
+  .shelf-info p{margin:0;font-size:14px;color:var(--ink-500)}
+
+  .notes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .note-card{background:var(--paper-50);border:1px solid var(--paper-400);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:20px}
+  .note-card p.quote{margin:0;font-family:Fraunces,Georgia,serif;font-size:22px;line-height:1.4}
+  .note-card p.source{margin:0;font-size:14px;color:var(--ink-500)}
+
+  footer{margin-top:80px;padding:40px 80px;border-top:1px solid var(--paper-400);display:flex;justify-content:space-between;font-size:14px;color:var(--ink-500)}
+
+  @media (max-width:1100px){
+    header,main,footer{padding-left:24px;padding-right:24px}
+    nav{display:none}
+    .hero{grid-template-columns:1fr}
+    .reading-grid,.notes-grid{grid-template-columns:1fr}
+    .shelf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .search{width:180px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <a href="#" class="brand">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2F5D50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h4v18H6a2 2 0 0 1-2-2z"></path><path d="M10 3h3v18h-3"></path><path d="M15.5 4.2l2.9-.8 3.3 16.6-2.9.8z"></path></svg>
+    <span>Rak Bacaanku</span>
+  </a>
+  <nav aria-label="Navigasi utama">
+    <a href="#" class="active">Beranda</a>
+    <a href="#rak">Koleksi</a>
+    <a href="#catatan">Catatan</a>
+    <a href="#">Statistik</a>
+  </nav>
+  <div class="toolbar">
+    <label for="cari" class="sr">Cari buku</label>
+    <div class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6358" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="cari" type="search" placeholder="Cari judul, penulis, catatan…">
+    </div>
+    <button type="button" class="btn-add">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      Tambah buku
+    </button>
+    <button type="button" class="avatar" aria-label="Profil">N</button>
+  </div>
+</header>
+
+<main>
+
+  <section aria-labelledby="judul-lanjut">
+    <div class="hero">
+      <div class="hero-card">
+        <div class="cover-xl">
+          <div class="t">Bumi Manusia</div>
+          <div class="a">Pramoedya Ananta Toer</div>
+        </div>
+        <div class="hero-body">
+          <p class="eyebrow">Lanjutkan membaca</p>
+          <h1 id="judul-lanjut">Selamat malam. Minke masih menunggumu.</h1>
+          <p class="desc">Terakhir dibaca kemarin, bab 11. Sisa sekitar 3 jam 20 menit untuk menamatkan buku ini.</p>
+          <div class="progress-row">
+            <div class="progress-meta"><span>Hal. 342 dari 535</span><strong>64%</strong></div>
+            <div class="track" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="Progres membaca Bumi Manusia"><div class="fill" style="width:64%"></div></div>
+          </div>
+          <div class="hero-actions">
+            <button type="button" class="btn-primary">Lanjut baca</button>
+            <button type="button" class="btn-ghost">Tulis catatan</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="goal-card" aria-label="Target membaca">
+        <div>
+          <p class="goal-label">Target 2026</p>
+          <p class="goal-num">14<span> / 24 buku</span></p>
+        </div>
+        <div class="months" id="months" aria-hidden="true"></div>
+        <div class="goal-stats">
+          <div class="stat"><b>4.812</b><span>halaman dibaca</span></div>
+          <div class="stat"><b>23 hari</b><span>membaca beruntun</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="judul-sedang">
+    <div class="section-head">
+      <h2 id="judul-sedang">Sedang dibaca</h2>
+      <a href="#rak">Lihat semua</a>
+    </div>
+    <div class="reading-grid" id="reading-grid"></div>
+  </section>
+
+  <section id="rak" aria-labelledby="judul-rak">
+    <div class="section-head rak-head">
+      <h2 id="judul-rak">Rak bukuku</h2>
+      <div role="tablist" aria-label="Saring rak" class="tabs" id="tabs"></div>
+    </div>
+    <div class="shelf-grid" id="shelf-grid"></div>
+  </section>
+
+  <section id="catatan" aria-labelledby="judul-catatan">
+    <div class="section-head">
+      <h2 id="judul-catatan">Catatan terbaru</h2>
+      <a href="#">Semua catatan</a>
+    </div>
+    <div class="notes-grid">
+      <article class="note-card">
+        <p class="quote">Affordance dan signifier beda: yang pertama soal kemungkinan, yang kedua soal petunjuk. Pakai buat review desain onboarding minggu depan.</p>
+        <p class="source">The Design of Everyday Things · Bab 1</p>
+      </article>
+      <article class="note-card">
+        <p class="quote">Dikotomi kendali: fokus ke hal yang bisa aku ubah. Cocok buat menghadapi feedback klien yang bertubi-tubi.</p>
+        <p class="source">Filosofi Teras · Bab 3</p>
+      </article>
+      <article class="note-card">
+        <p class="quote">Kebiasaan kecil yang konsisten lebih kuat dari target besar. Coba: sketsa 1 layar per hari.</p>
+        <p class="source">Atomic Habits · Bab 2</p>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Rak Bacaanku, perpustakaan pribadi</span>
+  <span>Dibaca pelan-pelan, diingat lama.</span>
+</footer>
+</div>
+
+<script>
+(function () {
+  var books = [
+    { title: 'Bumi Manusia', author: 'Pramoedya Ananta Toer', status: 'Sedang dibaca', bg: '#8A3B2E', fg: '#F6E7D2' },
+    { title: 'Filosofi Teras', author: 'Henry Manampiring', status: 'Sedang dibaca', bg: '#D9C9A8', fg: '#2A241C' },
+    { title: 'Atomic Habits', author: 'James Clear', status: 'Sedang dibaca', bg: '#2F4A5C', fg: '#EDE6D6' },
+    { title: 'The Design of Everyday Things', author: 'Don Norman', status: 'Selesai', bg: '#C8553D', fg: '#FFF4E6' },
+    { title: 'Laut Bercerita', author: 'Leila S. Chudori', status: 'Selesai', bg: '#1E3F4A', fg: '#DCE8E4' },
+    { title: 'Laskar Pelangi', author: 'Andrea Hirata', status: 'Selesai', bg: '#E0A458', fg: '#2A1F12' },
+    { title: 'Cantik Itu Luka', author: 'Eka Kurniawan', status: 'Ingin dibaca', bg: '#4A2F45', fg: '#F2DDE6' },
+    { title: 'Sapiens', author: 'Yuval Noah Harari', status: 'Ingin dibaca', bg: '#E8DFCF', fg: '#2A241C' },
+    { title: 'Hujan', author: 'Tere Liye', status: 'Ingin dibaca', bg: '#5B7A6E', fg: '#F1F5EF' }
+  ];
+  var chipColors = {
+    'Sedang dibaca': ['#DCE8E2', '#1E3F36'],
+    'Selesai': ['#EAE2D3', '#4A4238'],
+    'Ingin dibaca': ['#F6E1C4', '#6B3F10']
+  };
+  var reading = [
+    { title: 'Filosofi Teras', author: 'Henry Manampiring', pct: 38, left: 'Sisa ± 2 jam 40 mnt', bg: '#D9C9A8', fg: '#2A241C' },
+    { title: 'Atomic Habits', author: 'James Clear', pct: 81, left: 'Sisa ± 50 mnt', bg: '#2F4A5C', fg: '#EDE6D6' },
+    { title: 'The Design of Everyday Things', author: 'Don Norman', pct: 100, left: 'Baru saja selesai', bg: '#C8553D', fg: '#FFF4E6' }
+  ];
+  var monthVals = [1, 2, 1, 2, 1, 3, 2, 1, 1, 0, 0, 0];
+  var monthLabels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+  var filter = 'Semua';
+
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+
+  function renderMonths() {
+    var wrap = document.getElementById('months');
+    wrap.innerHTML = '';
+    monthVals.forEach(function (v, i) {
+      var col = el('div', 'month');
+      var barWrap = el('div', 'bar-wrap');
+      var bar = el('div', 'bar');
+      var h = Math.max(v * 28, 4);
+      bar.style.height = h + 'px';
+      bar.style.background = i < 9 ? (i === 8 ? '#E0A458' : '#2F5D50') : '#E2D9C8';
+      barWrap.appendChild(bar);
+      col.appendChild(barWrap);
+      var lab = el('span', null, monthLabels[i]);
+      col.appendChild(lab);
+      wrap.appendChild(col);
+    });
+  }
+
+  function renderReading() {
+    var wrap = document.getElementById('reading-grid');
+    wrap.innerHTML = '';
+    reading.forEach(function (b) {
+      var card = el('article', 'reading-card');
+      card.innerHTML =
+        '<div class="cover-sm" style="background:' + b.bg + ';color:' + b.fg + '">' +
+          '<div class="t">' + b.title + '</div><div class="a">' + b.author + '</div>' +
+        '</div>' +
+        '<div class="reading-info">' +
+          '<h3>' + b.title + '</h3><p>' + b.author + '</p>' +
+          '<div class="reading-meta"><span class="left">' + b.left + '</span><span class="pct">' + b.pct + '%</span></div>' +
+          '<div class="track-sm"><div class="fill" style="width:' + b.pct + '%"></div></div>' +
+        '</div>';
+      wrap.appendChild(card);
+    });
+  }
+
+  function renderTabs() {
+    var wrap = document.getElementById('tabs');
+    wrap.innerHTML = '';
+    var statuses = ['Semua', 'Sedang dibaca', 'Selesai', 'Ingin dibaca'];
+    statuses.forEach(function (label) {
+      var count = label === 'Semua' ? books.length : books.filter(function (b) { return b.status === label; }).length;
+      var btn = el('button', 'tab', label + ' <span class="count">' + count + '</span>');
+      btn.type = 'button';
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', label === filter ? 'true' : 'false');
+      btn.addEventListener('click', function () { filter = label; renderTabs(); renderShelf(); });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderShelf() {
+    var wrap = document.getElementById('shelf-grid');
+    wrap.innerHTML = '';
+    var list = books.filter(function (b) { return filter === 'Semua' || b.status === filter; });
+    list.forEach(function (b) {
+      var chip = chipColors[b.status];
+      var item = el('article', 'shelf-item');
+      item.innerHTML =
+        '<div class="cover-md" style="background:' + b.bg + ';color:' + b.fg + '">' +
+          '<div class="t">' + b.title + '</div><div class="a">' + b.author + '</div>' +
+        '</div>' +
+        '<div class="shelf-info">' +
+          '<span class="chip" style="background:' + chip[0] + ';color:' + chip[1] + '">' + b.status + '</span>' +
+          '<h3>' + b.title + '</h3><p>' + b.author + '</p>' +
+        '</div>';
+      wrap.appendChild(item);
+    });
+  }
+
+  renderMonths();
+  renderReading();
+  renderTabs();
+  renderShelf();
+})();
+</script>
+</body>
+</html>
